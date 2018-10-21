@@ -1,0 +1,51 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27428.2005
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Merthsoft.AutoOnAutoOff", "Source\Merthsoft.AutoOnAutoOff.csproj", "{E7A45011-922E-4A11-BF80-FC4CB91F9F0F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "About", "About", "{E0E316C1-D599-4BBA-83DA-F1F342790952}"
+	ProjectSection(SolutionItems) = preProject
+		About\About.xml = About\About.xml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Patches", "Patches", "{7B645954-247D-4BA3-855B-A1EEE7BF438B}"
+	ProjectSection(SolutionItems) = preProject
+		Patches\CielingLamp.xml = Patches\CielingLamp.xml
+		Patches\FloorLamp.xml = Patches\FloorLamp.xml
+		Patches\MoreFurniture.xml = Patches\MoreFurniture.xml
+		Patches\WallLights.xml = Patches\WallLights.xml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Textures", "Textures", "{47F6BB7E-7C69-4A4A-846B-A300AB61A7FA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UI", "UI", "{373641B8-4D34-406C-B68D-65BC2C7D3D81}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Commands", "Commands", "{7802CB13-CF3F-4B28-AFB0-45A8B2C3C662}"
+	ProjectSection(SolutionItems) = preProject
+		Textures\UI\Commands\OverrideButton.png = Textures\UI\Commands\OverrideButton.png
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E7A45011-922E-4A11-BF80-FC4CB91F9F0F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E7A45011-922E-4A11-BF80-FC4CB91F9F0F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E7A45011-922E-4A11-BF80-FC4CB91F9F0F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E7A45011-922E-4A11-BF80-FC4CB91F9F0F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{373641B8-4D34-406C-B68D-65BC2C7D3D81} = {47F6BB7E-7C69-4A4A-846B-A300AB61A7FA}
+		{7802CB13-CF3F-4B28-AFB0-45A8B2C3C662} = {373641B8-4D34-406C-B68D-65BC2C7D3D81}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E8F8EC3B-1574-464A-8385-43B4C5D96AAD}
+	EndGlobalSection
+EndGlobal

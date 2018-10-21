@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ModMetaData>
+  <name>Auto Light Switch</name>
+  <author>Merthsoft and Dianne</author>
+  <targetVersion>1.0.0</targetVersion>
+  <description>Changes the floor lamps so they turn on when someone's in the room and off when everyone leaves. Use the override toggle to prevent this from happening. The light must be enclosed in a room for it to work, otherwise they behave as default lamps.</description>
+</ModMetaData>
