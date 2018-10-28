@@ -2,24 +2,40 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using UnityEngine;
 using Verse;
 
 namespace Merthsoft.AutoOnAutoOff.Comp {
     class ProximityPower : ThingComp {
-        public CompProperties.ProximityPower Properties => (CompProperties.ProximityPower)this.props;
+        public CompProperties.ProximityPower Properties => (CompProperties.ProximityPower)props;
         protected int ticksUntilNextCheck = 0;
  
         public bool OverrideAutoPower = false;
 
+        private Thing trueParent;
+        public Thing TrueParent {
+            get {
+                if (trueParent == null) {
+                    // Wall Lights have a "glower" field
+                    trueParent = parent.GetType().GetFieldValue("glower", parent) as Thing;
+                    // Wall Lights could also be the base class for the colored light
+                    trueParent = trueParent ?? parent.GetType().BaseType.GetFieldValue("glower", parent) as Thing;
+                    // Otherwise, just ues the parent
+                    trueParent = trueParent ?? parent;
+                }
+                return trueParent;
+            }
+        }
+
         private Texture2D cachedCommandTex;
         private Texture2D CommandTex {
             get {
-                if (this.cachedCommandTex == null) {
-                    this.cachedCommandTex = ContentFinder<Texture2D>.Get("UI/Commands/OverrideButton", true);
+                if (cachedCommandTex == null) {
+                    cachedCommandTex = ContentFinder<Texture2D>.Get("UI/Commands/OverrideButton", true);
                 }
-                return this.cachedCommandTex;
+                return cachedCommandTex;
             }
         }
 
@@ -45,10 +61,10 @@ namespace Merthsoft.AutoOnAutoOff.Comp {
             if (OverrideAutoPower) { return; }
 
             var flickComp = parent.TryGetComp<CompFlickable>();
-
+            
             ticksUntilNextCheck -= ticks;
             if (ticksUntilNextCheck <= 0) {
-                var room = parent.GetRoom();
+                var room = TrueParent.GetRoom();
                 if (room == null) { return; }
 
                 var occupied = false;
@@ -76,8 +92,6 @@ namespace Merthsoft.AutoOnAutoOff.Comp {
 
                 if (flickComp != null) {
                     flickComp.SwitchIsOn = lightOn;
-                } else {
-
                 }
 
                 ResetTimer();
