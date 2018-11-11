@@ -13,7 +13,7 @@ namespace Merthsoft.AutoOnAutoOff.Comp {
         protected int ticksUntilNextCheck = 0;
  
         public bool OverrideAutoPower = false;
-
+       
         private Thing trueParent;
         public Thing TrueParent {
             get {
@@ -53,8 +53,12 @@ namespace Merthsoft.AutoOnAutoOff.Comp {
             handleTicks(GenTicks.TickRareInterval);
         }
 
-        public void ResetTimer() {
-            ticksUntilNextCheck = Properties.checkRate;
+        public void ResetTimer(bool lightOn) {
+            if (!AutoLight.Settings.OverrideCompProp) {
+                ticksUntilNextCheck = Properties.checkRate;
+            } else {
+                ticksUntilNextCheck = lightOn ? AutoLight.Settings.OverrideOnTicks : AutoLight.Settings.OverrideOffTicks;
+            }
         }
 
         private void handleTicks(int ticks) {
@@ -94,7 +98,7 @@ namespace Merthsoft.AutoOnAutoOff.Comp {
                     flickComp.SwitchIsOn = lightOn;
                 }
 
-                ResetTimer();
+                ResetTimer(lightOn);
             }
         }
 
