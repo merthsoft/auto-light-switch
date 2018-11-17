@@ -4,11 +4,11 @@
     <success>Always</success>
     <operations>
       <li Class="PatchOperationTest">
-        <xpath>Defs/ThingDef[defName = "Lighting_CeilingLight"]</xpath>
+        <xpath>Defs/ThingDef[@Name = "CeilingLampBase"]</xpath>
       </li>
       
       <li Class="PatchOperationAdd">
-        <xpath>Defs/ThingDef[defName = "Lighting_CeilingLight"]/comps</xpath>
+        <xpath>Defs/ThingDef[@Name = "CeilingLampBase"]/comps</xpath>
         <value>
           <li Class="CompProperties_Flickable"/>
           <li Class="Merthsoft.AutoOnAutoOff.CompProperties.ProximityPower">
@@ -20,10 +20,10 @@
         </value>
       </li>
 
-      <li Class="PatchOperationAdd">
-        <xpath>Defs/ThingDef[defName = "Lighting_CeilingLight"]</xpath>
+      <li Class="PatchOperationReplace">
+        <xpath>Defs/ThingDef[@Name = "CeilingLampBase"]/tickerType/text()</xpath>
         <value>
-          <tickerType>Normal</tickerType>
+          Normal
         </value>
       </li>
     </operations>

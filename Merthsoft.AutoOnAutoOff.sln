@@ -12,6 +12,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "About", "About", "{E0E316C1
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Patches", "Patches", "{7B645954-247D-4BA3-855B-A1EEE7BF438B}"
 	ProjectSection(SolutionItems) = preProject
+		Patches\CielingLamp - Other Version.xml = Patches\CielingLamp - Other Version.xml
 		Patches\CielingLamp.xml = Patches\CielingLamp.xml
 		Patches\FloorLamp.xml = Patches\FloorLamp.xml
 		Patches\MoreFurniture.xml = Patches\MoreFurniture.xml
