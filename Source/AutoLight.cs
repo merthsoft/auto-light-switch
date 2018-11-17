@@ -26,7 +26,7 @@ namespace Merthsoft.AutoOnAutoOff {
             if (Settings.OverrideCompProp) {
                 ls.Label("These values are measured in in-game Ticks. The default is 50. Max is 2500, which is the number of ticks in one in-game hour.");
 
-                ls.Label("(Though you can put a value under 250, that won't actually work, but the way minimum is handled by the UI is awful so I didn't want to set it.");
+                ls.Label("(Though you can put a value under 250, that won't actually work, but the way minimum is handled by the UI is awful so I didn't want to set it.)");
 
                 var offBuffer = Settings.OverrideOffTicks.ToString();
                 ls.TextFieldNumericLabeled<int>("Check rate when light is off.", ref Settings.OverrideOffTicks, ref offBuffer, 0, 2500);
