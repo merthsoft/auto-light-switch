@@ -4,7 +4,7 @@
     <xpath>Defs/ThingDef[@Name = "StandingLampBase"]/comps</xpath>
     <value>
       <li Class="Merthsoft.AutoOnAutoOff.CompProperties.ProximityPower">
-        <checkRate>50</checkRate>
+        <checkRate>250</checkRate>
         <autoOn>true</autoOn>
         <autoOff>true</autoOff>
         <showOverrideButton>true</showOverrideButton>
@@ -15,7 +15,7 @@
   <Operation Class="PatchOperationAdd">
     <xpath>Defs/ThingDef[@Name = "StandingLampBase"]</xpath>
     <value>
-      <tickerType>Normal</tickerType>
+      <tickerType>Rare</tickerType>
     </value>
   </Operation>
 </Patch>

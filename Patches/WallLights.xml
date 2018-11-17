@@ -11,7 +11,7 @@
         <xpath>Defs/ThingDef[@Name = "MURWallLightBase"]/comps</xpath>
         <value>
           <li Class="Merthsoft.AutoOnAutoOff.CompProperties.ProximityPower">
-            <checkRate>50</checkRate>
+            <checkRate>250</checkRate>
             <autoOn>true</autoOn>
             <autoOff>true</autoOff>
             <showOverrideButton>true</showOverrideButton>
@@ -22,7 +22,7 @@
       <li Class="PatchOperationAdd">
         <xpath>Defs/ThingDef[@Name = "MURWallLightBase"]</xpath>
         <value>
-          <tickerType>Normal</tickerType>
+          <tickerType>Rare</tickerType>
         </value>
       </li>
     </operations>

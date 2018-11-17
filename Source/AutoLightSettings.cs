@@ -10,8 +10,8 @@ namespace Merthsoft.AutoOnAutoOff {
             base.ExposeData();
 
             Scribe_Values.Look(ref OverrideCompProp, nameof(OverrideCompProp), false);
-            Scribe_Values.Look(ref OverrideOnTicks, nameof(OverrideOnTicks), 50);
-            Scribe_Values.Look(ref OverrideOffTicks, nameof(OverrideOffTicks), 50);
+            Scribe_Values.Look(ref OverrideOnTicks, nameof(OverrideOnTicks), 250);
+            Scribe_Values.Look(ref OverrideOffTicks, nameof(OverrideOffTicks), 250);
         }
     }
 }

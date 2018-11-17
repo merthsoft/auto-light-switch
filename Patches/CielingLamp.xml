@@ -12,7 +12,7 @@
         <value>
           <li Class="CompProperties_Flickable"/>
           <li Class="Merthsoft.AutoOnAutoOff.CompProperties.ProximityPower">
-            <checkRate>50</checkRate>
+            <checkRate>250</checkRate>
             <autoOn>true</autoOn>
             <autoOff>true</autoOff>
             <showOverrideButton>true</showOverrideButton>
@@ -23,7 +23,7 @@
       <li Class="PatchOperationAdd">
         <xpath>Defs/ThingDef[defName = "Lighting_CeilingLight"]</xpath>
         <value>
-          <tickerType>Normal</tickerType>
+          <tickerType>Rare</tickerType>
         </value>
       </li>
     </operations>

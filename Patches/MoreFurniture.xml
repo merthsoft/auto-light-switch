@@ -11,7 +11,7 @@
         <xpath>Defs/ThingDef[@Name = "Anon2LampBase"]/comps</xpath>
         <value>
           <li Class="Merthsoft.AutoOnAutoOff.CompProperties.ProximityPower">
-            <checkRate>50</checkRate>
+            <checkRate>250</checkRate>
             <autoOn>true</autoOn>
             <autoOff>true</autoOff>
             <showOverrideButton>true</showOverrideButton>
@@ -22,7 +22,7 @@
       <li Class="PatchOperationAdd">
         <xpath>Defs/ThingDef[@Name = "Anon2LampBase"]</xpath>
         <value>
-          <tickerType>Normal</tickerType>
+          <tickerType>Rare</tickerType>
         </value>
       </li>
 
@@ -34,7 +34,7 @@
         <xpath>Defs/ThingDef[defName = "Anon2EndTableLight"]/comps</xpath>
         <value>
           <li Class="Merthsoft.AutoOnAutoOff.CompProperties.ProximityPower">
-            <checkRate>50</checkRate>
+            <checkRate>250</checkRate>
             <autoOn>true</autoOn>
             <autoOff>true</autoOff>
             <showOverrideButton>true</showOverrideButton>
@@ -45,7 +45,7 @@
       <li Class="PatchOperationAdd">
         <xpath>Defs/ThingDef[defName = "Anon2EndTableLight"]</xpath>
         <value>
-          <tickerType>Normal</tickerType>
+          <tickerType>Rare</tickerType>
         </value>
       </li>
 
@@ -57,7 +57,7 @@
         <xpath>Defs/ThingDef[defName = "Anon2RoyalEndTableLight"]/comps</xpath>
         <value>
           <li Class="Merthsoft.AutoOnAutoOff.CompProperties.ProximityPower">
-            <checkRate>50</checkRate>
+            <checkRate>250</checkRate>
             <autoOn>true</autoOn>
             <autoOff>true</autoOff>
             <showOverrideButton>true</showOverrideButton>
@@ -68,7 +68,7 @@
       <li Class="PatchOperationAdd">
         <xpath>Defs/ThingDef[defName = "Anon2RoyalEndTableLight"]</xpath>
         <value>
-          <tickerType>Normal</tickerType>
+          <tickerType>Rare</tickerType>
         </value>
       </li>
     </operations>
