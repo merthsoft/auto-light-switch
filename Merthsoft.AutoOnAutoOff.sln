@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27428.2005
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29613.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Merthsoft.AutoOnAutoOff", "Source\Merthsoft.AutoOnAutoOff.csproj", "{E7A45011-922E-4A11-BF80-FC4CB91F9F0F}"
 EndProject
@@ -31,14 +31,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Commands", "Commands", "{78
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|Any CPU = Debug|Any CPU
-		Release|Any CPU = Release|Any CPU
+		RimWorld|Any CPU = RimWorld|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{E7A45011-922E-4A11-BF80-FC4CB91F9F0F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E7A45011-922E-4A11-BF80-FC4CB91F9F0F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E7A45011-922E-4A11-BF80-FC4CB91F9F0F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E7A45011-922E-4A11-BF80-FC4CB91F9F0F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E7A45011-922E-4A11-BF80-FC4CB91F9F0F}.RimWorld|Any CPU.ActiveCfg = RimWorld|Any CPU
+		{E7A45011-922E-4A11-BF80-FC4CB91F9F0F}.RimWorld|Any CPU.Build.0 = RimWorld|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

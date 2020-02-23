@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Verse;
-using RimWorld;
-
-namespace Merthsoft.AutoOnAutoOff.CompProperties {
+﻿namespace Merthsoft.AutoOnAutoOff.CompProperties {
     class ProximityPower : Verse.CompProperties {
         public ProximityPower() {
             this.compClass = typeof(Comp.ProximityPower);
