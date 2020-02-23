@@ -12,19 +12,10 @@ namespace Merthsoft.AutoOnAutoOff.Comp {
         public bool OverrideAutoPower = false;
        
         private Thing trueParent;
-        public Thing TrueParent {
-            get {
-                if (trueParent == null) {
-                    // Wall Lights have a "glower" field
-                    trueParent = parent.GetType().GetFieldValue("glower", parent) as Thing;
-                    // Wall Lights could also be the base class for the colored light
-                    trueParent = trueParent ?? parent.GetType().BaseType.GetFieldValue("glower", parent) as Thing;
-                    // Otherwise, just ues the parent
-                    trueParent = trueParent ?? parent;
-                }
-                return trueParent;
-            }
-        }
+        public Thing TrueParent
+            => trueParent ??= (parent.GetType().GetFieldValue("glower", parent) as Thing)
+                ?? (parent.GetType().BaseType.GetFieldValue("glower", parent) as Thing)
+                ?? parent;
 
         private Texture2D cachedCommandTex;
         private Texture2D CommandTex {
@@ -60,13 +51,11 @@ namespace Merthsoft.AutoOnAutoOff.Comp {
 
         private void handleTicks(int ticks) {
             if (OverrideAutoPower) { return; }
-
-            var flickComp = parent.TryGetComp<CompFlickable>();
-            
+                       
             ticksUntilNextCheck -= ticks;
             if (ticksUntilNextCheck <= 0) {
                 var room = TrueParent.GetRoom();
-                if (room == null) { return; }
+                if (room == null || room.PsychologicallyOutdoors) { return; }
 
                 var occupied = false;
                 foreach (var cell in room.Cells) {
@@ -83,7 +72,7 @@ namespace Merthsoft.AutoOnAutoOff.Comp {
                         }
                     }
                 }
-                
+
                 bool lightOn = false;
                 if (occupied && Properties.autoOn) {
                     lightOn = true;
@@ -91,11 +80,22 @@ namespace Merthsoft.AutoOnAutoOff.Comp {
                     lightOn = false;
                 }
 
-                if (flickComp != null) {
-                    flickComp.SwitchIsOn = lightOn;
-                }
-
+                setSwitchIsOn(lightOn);
                 ResetTimer(lightOn);
+            }
+        }
+
+        private void setSwitchIsOn(bool switchIsOn) {
+            var flickComp = parent.TryGetComp<CompFlickable>();
+            if (flickComp != null) {
+                flickComp.SwitchIsOn = switchIsOn;
+            }
+        }
+
+        private void resetToOn() {
+            var flickComp = parent.TryGetComp<CompFlickable>();
+            if (flickComp != null) {
+                flickComp.ResetToOn();
             }
         }
 
@@ -111,7 +111,9 @@ namespace Merthsoft.AutoOnAutoOff.Comp {
                     defaultDesc = "Toggles whether the power is automatically on or off.",
                     isActive = (() => OverrideAutoPower),
                     toggleAction = delegate {
-                        OverrideAutoPower = !OverrideAutoPower;
+                        if (OverrideAutoPower = !OverrideAutoPower) {
+                            resetToOn();
+                        }
                     }
                 };
             }
