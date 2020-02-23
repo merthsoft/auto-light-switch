@@ -1,8 +1,4 @@
 ﻿using Merthsoft.AutoOnAutoOff.Comp;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using UnityEngine;
 using Verse;
 
@@ -24,7 +20,7 @@ namespace Merthsoft.AutoOnAutoOff {
             ls.CheckboxLabeled("Override check rate.", ref Settings.OverrideCompProp);
 
             if (Settings.OverrideCompProp) {
-                ls.Label("These values are measured in in-game Ticks. The default is 50. Max is 2500, which is the number of ticks in one in-game hour.");
+                ls.Label("These values are measured in in-game Ticks. The default is 250. Max is 2500, which is the number of ticks in one in-game hour.");
 
                 ls.Label("(Though you can put a value under 250, that won't actually work, but the way minimum is handled by the UI is awful so I didn't want to set it.)");
 
