@@ -33,20 +33,17 @@ namespace Merthsoft.AutoOnAutoOff.Comp {
             Scribe_Values.Look<bool>(ref OverrideAutoPower, "OverrideAutoPower");
         }
 
-        public override void CompTick() {
-            handleTicks(1);
-        }
+        public override void CompTick() 
+            => handleTicks(1);
 
-        public override void CompTickRare() {
-            handleTicks(GenTicks.TickRareInterval);
-        }
+        public override void CompTickRare() 
+            => handleTicks(GenTicks.TickRareInterval);
 
         public void ResetTimer(bool lightOn) {
-            if (!AutoLight.Settings.OverrideCompProp) {
+            if (!AutoLight.Settings.OverrideCompProp)
                 ticksUntilNextCheck = Properties.checkRate;
-            } else {
+            else
                 ticksUntilNextCheck = lightOn ? AutoLight.Settings.OverrideOnTicks : AutoLight.Settings.OverrideOffTicks;
-            }
         }
 
         private void handleTicks(int ticks) {
@@ -55,8 +52,9 @@ namespace Merthsoft.AutoOnAutoOff.Comp {
             ticksUntilNextCheck -= ticks;
             if (ticksUntilNextCheck <= 0) {
                 var room = TrueParent.GetRoom();
-                if (room == null || room.PsychologicallyOutdoors) { return; }
-
+                if (room == null || room.PsychologicallyOutdoors)
+                    return; 
+                
                 var occupied = false;
                 foreach (var cell in room.Cells) {
                     var pawns = cell.GetThingList(parent.Map).Where(t => t is Pawn).Cast<Pawn>();
@@ -74,11 +72,10 @@ namespace Merthsoft.AutoOnAutoOff.Comp {
                 }
 
                 bool lightOn = false;
-                if (occupied && Properties.autoOn) {
+                if (occupied && Properties.autoOn)
                     lightOn = true;
-                } else if (!occupied && Properties.autoOff) {
+                else if (!occupied && Properties.autoOff)
                     lightOn = false;
-                }
 
                 setSwitchIsOn(lightOn);
                 ResetTimer(lightOn);
@@ -87,16 +84,14 @@ namespace Merthsoft.AutoOnAutoOff.Comp {
 
         private void setSwitchIsOn(bool switchIsOn) {
             var flickComp = parent.TryGetComp<CompFlickable>();
-            if (flickComp != null) {
+            if (flickComp != null) 
                 flickComp.SwitchIsOn = switchIsOn;
-            }
         }
 
         private void resetToOn() {
             var flickComp = parent.TryGetComp<CompFlickable>();
-            if (flickComp != null) {
+            if (flickComp != null) 
                 flickComp.ResetToOn();
-            }
         }
 
         public override IEnumerable<Gizmo> CompGetGizmosExtra() {
@@ -107,8 +102,8 @@ namespace Merthsoft.AutoOnAutoOff.Comp {
             if (Properties.showOverrideButton && this.parent.Faction == Faction.OfPlayer) {
                 yield return new Command_Toggle {
                     icon = CommandTex,
-                    defaultLabel = "Override auto switch",
-                    defaultDesc = "Toggles whether the power is automatically on or off.",
+                    defaultLabel = this.parent.def.tickerType.ToString(),// "Override auto switch",
+                    defaultDesc = this.parent.def.defName, //"Toggles whether the power is automatically on or off.",
                     isActive = (() => OverrideAutoPower),
                     toggleAction = delegate {
                         if (OverrideAutoPower = !OverrideAutoPower) {

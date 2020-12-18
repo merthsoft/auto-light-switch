@@ -1,4 +1,7 @@
 ﻿using Merthsoft.AutoOnAutoOff.Comp;
+using RimWorld.Planet;
+using System.Linq;
+using System.Reflection;
 using UnityEngine;
 using Verse;
 
@@ -13,7 +16,8 @@ namespace Merthsoft.AutoOnAutoOff {
             Settings = GetSettings<AutoLightSettings>();
         }
 
-        public override void DoSettingsWindowContents(Rect inRect) {
+        public override void DoSettingsWindowContents(Rect inRect)
+        {
             Listing_Standard ls = new Listing_Standard();
             ls.Begin(inRect);
 

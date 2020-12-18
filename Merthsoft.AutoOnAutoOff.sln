@@ -12,12 +12,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "About", "About", "{E0E316C1
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Patches", "Patches", "{7B645954-247D-4BA3-855B-A1EEE7BF438B}"
 	ProjectSection(SolutionItems) = preProject
-		1.1\Patches\CielingLamp - Other Version.xml = 1.1\Patches\CielingLamp - Other Version.xml
-		1.1\Patches\CielingLamp.xml = 1.1\Patches\CielingLamp.xml
-		1.1\Patches\FloorLamp.xml = 1.1\Patches\FloorLamp.xml
-		1.1\Patches\MoreFurniture.xml = 1.1\Patches\MoreFurniture.xml
-		1.1\Patches\WallLights.xml = 1.1\Patches\WallLights.xml
-		1.1\Patches\WallLightsV2.xml = 1.1\Patches\WallLightsV2.xml
+		1.2\Patches\CielingLamp - Other Version.xml = 1.2\Patches\CielingLamp - Other Version.xml
+		1.2\Patches\CielingLamp.xml = 1.2\Patches\CielingLamp.xml
+		1.2\Patches\FloorLamp.xml = 1.2\Patches\FloorLamp.xml
+		1.2\Patches\MoreFurniture.xml = 1.2\Patches\MoreFurniture.xml
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Textures", "Textures", "{47F6BB7E-7C69-4A4A-846B-A300AB61A7FA}"
