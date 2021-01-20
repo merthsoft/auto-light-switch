@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="AutoLight.cs" />
     <Compile Include="AutoLightSettings.cs" />
+    <Compile Include="Compatability.cs" />
     <Compile Include="CompProperties\ProximityPower.cs" />
     <Compile Include="Comp\ProximityPower.cs" />
     <Compile Include="Extensions.cs" />

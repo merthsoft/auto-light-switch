@@ -12,9 +12,10 @@ namespace Merthsoft.AutoOnAutoOff.Comp {
         public bool OverrideAutoPower = false;
        
         private Thing trueParent;
+        
         public Thing TrueParent
-            => trueParent ??= (parent.GetType().GetFieldValue("glower", parent) as Thing)
-                ?? (parent.GetType().BaseType.GetFieldValue("glower", parent) as Thing)
+            => trueParent ??= parent.GetFieldValue<Thing>("glower")
+                ?? parent.GetType().BaseType.GetFieldValue<Thing>("glower", parent)
                 ?? parent;
 
         private Texture2D cachedCommandTex;
@@ -46,12 +47,16 @@ namespace Merthsoft.AutoOnAutoOff.Comp {
                 ticksUntilNextCheck = lightOn ? AutoLight.Settings.OverrideOnTicks : AutoLight.Settings.OverrideOffTicks;
         }
 
+        public Room GetRoom()
+            => TrueParent.GetRoom() ?? Compatability.MURWallLight.GetRoom(parent);
+
         private void handleTicks(int ticks) {
             if (OverrideAutoPower) { return; }
                        
             ticksUntilNextCheck -= ticks;
             if (ticksUntilNextCheck <= 0) {
-                var room = TrueParent.GetRoom();
+                var room = GetRoom();
+                Log.Message($"TrueParent.GetType() => {TrueParent.GetType()} room => {room?.ID.ToString() ?? "null"}");
                 if (room == null || room.PsychologicallyOutdoors)
                     return; 
                 
