@@ -48,7 +48,6 @@ namespace Merthsoft.AutoOnAutoOff.Comp {
             ticksUntilNextCheck -= ticks;
             if (ticksUntilNextCheck <= 0) {
                 var room = GetRoom();
-                Log.Message($"TrueParent.GetType() => {TrueParent.GetType()} room => {room?.ID.ToString() ?? "null"}");
                 if (room == null || room.PsychologicallyOutdoors)
                     return; 
                 
