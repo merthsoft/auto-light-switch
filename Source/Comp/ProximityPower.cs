@@ -19,14 +19,8 @@ namespace Merthsoft.AutoOnAutoOff.Comp {
                 ?? parent;
 
         private Texture2D cachedCommandTex;
-        private Texture2D CommandTex {
-            get {
-                if (cachedCommandTex == null) {
-                    cachedCommandTex = ContentFinder<Texture2D>.Get("UI/Commands/OverrideButton", true);
-                }
-                return cachedCommandTex;
-            }
-        }
+        private Texture2D CommandTex 
+            => cachedCommandTex ?? (cachedCommandTex = ContentFinder<Texture2D>.Get("UI/Commands/OverrideButton", true));
 
         public override void PostExposeData() {
             base.PostExposeData();
@@ -40,12 +34,10 @@ namespace Merthsoft.AutoOnAutoOff.Comp {
         public override void CompTickRare() 
             => handleTicks(GenTicks.TickRareInterval);
 
-        public void ResetTimer(bool lightOn) {
-            if (!AutoLight.Settings.OverrideCompProp)
-                ticksUntilNextCheck = Properties.checkRate;
-            else
-                ticksUntilNextCheck = lightOn ? AutoLight.Settings.OverrideOnTicks : AutoLight.Settings.OverrideOffTicks;
-        }
+        public void ResetTimer(bool lightOn) 
+            => ticksUntilNextCheck = !AutoLight.Settings.OverrideCompProp 
+                ? Properties.checkRate 
+                : lightOn ? AutoLight.Settings.OverrideOnTicks : AutoLight.Settings.OverrideOffTicks;
 
         public Room GetRoom()
             => TrueParent.GetRoom() ?? Compatability.MURWallLight.GetRoom(parent);
@@ -100,15 +92,14 @@ namespace Merthsoft.AutoOnAutoOff.Comp {
         }
 
         public override IEnumerable<Gizmo> CompGetGizmosExtra() {
-            foreach (Gizmo c in base.CompGetGizmosExtra()) {
+            foreach (Gizmo c in base.CompGetGizmosExtra())
                 yield return c;
-            }
 
-            if (Properties.showOverrideButton && this.parent.Faction == Faction.OfPlayer) {
+            if (Properties.showOverrideButton && parent.Faction == Faction.OfPlayer) {
                 yield return new Command_Toggle {
                     icon = CommandTex,
-                    defaultLabel = this.parent.def.tickerType.ToString(),// "Override auto switch",
-                    defaultDesc = this.parent.def.defName, //"Toggles whether the power is automatically on or off.",
+                    defaultLabel = "Override auto switch",
+                    defaultDesc = "Toggles whether the power is automatically on or off.",
                     isActive = (() => OverrideAutoPower),
                     toggleAction = delegate {
                         if (OverrideAutoPower = !OverrideAutoPower) {

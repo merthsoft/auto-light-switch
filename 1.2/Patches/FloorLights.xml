@@ -242,14 +242,16 @@
       </li>
 
       <li Class="PatchOperationAdd">
-        <xpath>Defs/ThingDef[@Name = "FloorTileLightSquare"]/comps</xpath>
+        <xpath>Defs/ThingDef[@Name = "FloorTileLightSquare"]</xpath>
         <value>
-          <li Class="Merthsoft.AutoOnAutoOff.CompProperties.ProximityPower">
-            <checkRate>250</checkRate>
-            <autoOn>true</autoOn>
-            <autoOff>true</autoOff>
-            <showOverrideButton>true</showOverrideButton>
-          </li>
+          <comps>
+            <li Class="Merthsoft.AutoOnAutoOff.CompProperties.ProximityPower">
+              <checkRate>250</checkRate>
+              <autoOn>true</autoOn>
+              <autoOff>true</autoOff>
+              <showOverrideButton>true</showOverrideButton>
+            </li>
+          </comps>
         </value>
       </li>
       <li Class="PatchOperationAdd">
