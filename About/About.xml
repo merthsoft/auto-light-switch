@@ -2,11 +2,13 @@
 <ModMetaData>
   <name>Auto Light Switch - dev</name>
   <url>https://github.com/merthsoft/auto-light-switch</url>
-  <author>Merthsoft and Dianne</author>
+  <author>merthsoft</author>
   <supportedVersions>
     <li>1.1</li>
     <li>1.2</li>
   </supportedVersions>
   <packageId>Merthsoft.AutoLightSwitch</packageId>
-  <description>Changes the floor lamps so they turn on when someone's in the room and off when everyone leaves. Use the override toggle to prevent this from happening. The light must be enclosed in a room for it to work, otherwise they behave as default lamps. Check the mod settings to adjust the timing.</description>
+  <description>Changes the floor lamps so they turn on when someone's in the room and off when everyone leaves. Use the override toggle to prevent this from happening. The light must be enclosed in a room for it to work, otherwise they behave as default lamps. Check the mod settings to adjust the timing.
+  
+    ** Idea by Dianne</description>
 </ModMetaData>
