@@ -1,7 +1,11 @@
-﻿namespace Merthsoft.AutoOnAutoOff.CompProperties {
-    class ProximityPower : Verse.CompProperties {
-        public ProximityPower() {
-            this.compClass = typeof(Comp.ProximityPower);
+﻿
+namespace Merthsoft.AutoOnAutoOff.CompProperties
+{
+    internal class ProximityPower : Verse.CompProperties
+    {
+        public ProximityPower()
+        {
+            compClass = typeof(Comp.ProximityPower);
 
             checkRate = 250;
             autoOn = true;

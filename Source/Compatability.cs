@@ -1,10 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using Verse;
 
 namespace Merthsoft.AutoOnAutoOff
 {
-    static class Compatability
+    internal static class Compatability
     {
         public static class MURWallLight
         {

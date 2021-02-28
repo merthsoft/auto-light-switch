@@ -1,38 +1,43 @@
-﻿using RimWorld;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using RimWorld;
 using UnityEngine;
 using Verse;
 
-namespace Merthsoft.AutoOnAutoOff.Comp {
-    class ProximityPower : ThingComp {
+namespace Merthsoft.AutoOnAutoOff.Comp
+{
+    internal class ProximityPower : ThingComp
+    {
         public CompProperties.ProximityPower Properties => (CompProperties.ProximityPower)props;
+
         protected int ticksUntilNextCheck = 0;
- 
+
         public bool OverrideAutoPower = false;
-       
+
         private Thing trueParent;
-        
+
         public Thing TrueParent
             => trueParent ??= parent.GetFieldValue<Thing>("glower")
                 ?? parent.GetType().BaseType.GetFieldValue<Thing>("glower", parent)
                 ?? parent;
 
         private Texture2D cachedCommandTex;
-        private Texture2D CommandTex 
-            => cachedCommandTex ?? (cachedCommandTex = ContentFinder<Texture2D>.Get("UI/Commands/OverrideButton", true));
 
-        public override void PostExposeData() {
+        private Texture2D CommandTex 
+            => cachedCommandTex ??= ContentFinder<Texture2D>.Get("UI/Commands/OverrideButton", true);
+
+        public override void PostExposeData()
+        {
             base.PostExposeData();
 
-            Scribe_Values.Look<bool>(ref OverrideAutoPower, "OverrideAutoPower");
+            Scribe_Values.Look<bool>(ref OverrideAutoPower, nameof(OverrideAutoPower));
         }
 
         public override void CompTick() 
-            => handleTicks(1);
+            => HandleTicks(1);
 
         public override void CompTickRare() 
-            => handleTicks(GenTicks.TickRareInterval);
+            => HandleTicks(GenTicks.TickRareInterval);
 
         public void ResetTimer(bool lightOn) 
             => ticksUntilNextCheck = !AutoLight.Settings.OverrideCompProp 
@@ -42,32 +47,28 @@ namespace Merthsoft.AutoOnAutoOff.Comp {
         public Room GetRoom()
             => TrueParent.GetRoom() ?? Compatability.MURWallLight.GetRoom(parent);
 
-        private void handleTicks(int ticks) {
-            if (OverrideAutoPower) { return; }
-                       
+        private void HandleTicks(int ticks)
+        {
+            if (OverrideAutoPower)
+                return;
             ticksUntilNextCheck -= ticks;
-            if (ticksUntilNextCheck <= 0) {
+            if (ticksUntilNextCheck <= 0)
+            {
                 var room = GetRoom();
                 if (room == null || room.PsychologicallyOutdoors)
-                    return; 
-                
-                var occupied = false;
-                foreach (var cell in room.Cells) {
-                    var pawns = cell.GetThingList(parent.Map).Where(t => t is Pawn).Cast<Pawn>();
-                    if (!Properties.offWhenSleeping) {
-                        if (pawns.Count() > 0) {
-                            occupied = true;
-                            break;
-                        }
-                    } else {
-                        if (pawns.Count(p => p.Awake()) > 0) {
-                            occupied = true;
-                            break;
-                        }
-                    }
-                }
+                    return;
 
-                bool lightOn = false;
+                var occupied = false;
+                var pawns = room.ContainedThings(ThingDefOf.Human).Where(t => t is Pawn).Cast<Pawn>();
+                if (!Properties.offWhenSleeping)
+                {
+                    if (pawns.Count() > 0)
+                        occupied = true;
+                }
+                else if (pawns.Count(p => p.Awake()) > 0)
+                    occupied = true;
+
+                var lightOn = false;
                 if (occupied && Properties.autoOn)
                     lightOn = true;
                 else if (!occupied && Properties.autoOff)
@@ -76,36 +77,39 @@ namespace Merthsoft.AutoOnAutoOff.Comp {
                 setSwitchIsOn(lightOn);
                 ResetTimer(lightOn);
             }
+
+            void setSwitchIsOn(bool switchIsOn)
+            {
+                var flickComp = parent.TryGetComp<CompFlickable>();
+                if (flickComp != null)
+                    flickComp.SwitchIsOn = switchIsOn;
+            }
         }
 
-        private void setSwitchIsOn(bool switchIsOn) {
-            var flickComp = parent.TryGetComp<CompFlickable>();
-            if (flickComp != null) 
-                flickComp.SwitchIsOn = switchIsOn;
-        }
-
-        private void resetToOn() {
-            var flickComp = parent.TryGetComp<CompFlickable>();
-            if (flickComp != null) 
-                flickComp.ResetToOn();
-        }
-
-        public override IEnumerable<Gizmo> CompGetGizmosExtra() {
-            foreach (Gizmo c in base.CompGetGizmosExtra())
+        public override IEnumerable<Gizmo> CompGetGizmosExtra()
+        {
+            foreach (var c in base.CompGetGizmosExtra())
                 yield return c;
 
-            if (Properties.showOverrideButton && parent.Faction == Faction.OfPlayer) {
-                yield return new Command_Toggle {
+            if (Properties.showOverrideButton && parent.Faction == Faction.OfPlayer)
+                yield return new Command_Toggle
+                {
                     icon = CommandTex,
                     defaultLabel = "Override auto switch",
                     defaultDesc = "Toggles whether the power is automatically on or off.",
-                    isActive = (() => OverrideAutoPower),
-                    toggleAction = delegate {
-                        if (OverrideAutoPower = !OverrideAutoPower) {
+                    isActive = () => OverrideAutoPower,
+                    toggleAction = delegate
+                    {
+                        if (OverrideAutoPower = !OverrideAutoPower)
                             resetToOn();
-                        }
                     }
                 };
+
+            void resetToOn()
+            {
+                var flickComp = parent.TryGetComp<CompFlickable>();
+                if (flickComp != null)
+                    flickComp.ResetToOn();
             }
         }
     }
