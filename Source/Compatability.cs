@@ -7,7 +7,7 @@ namespace Merthsoft.AutoOnAutoOff
         public static class MURWallLight
         {
             public static Room GetRoom(ThingWithComps parent)
-                => RegionAndRoomQuery.RoomAtFast(parent.Position + IntVec3.North.RotatedBy(parent.Rotation), parent.Map);
+                => RegionAndRoomQuery.RoomAt(parent.Position + IntVec3.North.RotatedBy(parent.Rotation), parent.Map);
         }
     }
 }
