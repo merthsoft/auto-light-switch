@@ -59,7 +59,9 @@ namespace Merthsoft.AutoOnAutoOff.Comp
                     return;
 
                 var occupied = false;
-                var pawns = room.ContainedThings(ThingDefOf.Human).Where(t => t is Pawn).Cast<Pawn>();
+                var pawns = room.ContainedAndAdjacentThings
+                                .Where(t => t is Pawn && t.GetRoom().ID == room.ID)
+                                .Cast<Pawn>();
                 if (!Properties.offWhenSleeping)
                 {
                     if (pawns.Count() > 0)
