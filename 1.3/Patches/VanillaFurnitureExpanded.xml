@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Patch>
+  <Operation Class="PatchOperationSequence">
+    <success>Always</success>
+    <operations>
+      <li Class="PatchOperationTest">
+        <xpath>Defs/ThingDef[defName = "Table_LightEndTable"]</xpath>
+      </li>
+
+      <li Class="PatchOperationAdd">
+        <xpath>Defs/ThingDef[defName = "Table_LightEndTable"]/comps</xpath>
+        <value>
+          <li Class="CompProperties_Flickable"/>
+          <li Class="Merthsoft.AutoOnAutoOff.CompProperties.ProximityPower">
+            <checkRate>250</checkRate>
+            <autoOn>true</autoOn>
+            <autoOff>true</autoOff>
+            <showOverrideButton>true</showOverrideButton>
+          </li>
+        </value>
+      </li>
+
+      <li Class="PatchOperationAdd">
+        <xpath>Defs/ThingDef[defName = "Table_LightEndTable"]</xpath>
+        <value>
+          <tickerType>Rare</tickerType>
+        </value>
+      </li>
+
+      <li Class="PatchOperationTest">
+        <xpath>Defs/ThingDef[defName = "Light_ModernLamp"]</xpath>
+      </li>
+
+      <li Class="PatchOperationAdd">
+        <xpath>Defs/ThingDef[defName = "Light_ModernLamp"]/comps</xpath>
+        <value>
+          <li Class="CompProperties_Flickable"/>
+          <li Class="Merthsoft.AutoOnAutoOff.CompProperties.ProximityPower">
+            <checkRate>250</checkRate>
+            <autoOn>true</autoOn>
+            <autoOff>true</autoOff>
+            <showOverrideButton>true</showOverrideButton>
+          </li>
+        </value>
+      </li>
+    </operations>
+  </Operation>
+</Patch>
