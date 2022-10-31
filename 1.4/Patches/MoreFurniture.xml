@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Patch>
+  <Operation Class="PatchOperationSequence">
+    <success>Always</success>
+    <operations>
+      <li Class="PatchOperationTest">
+        <xpath>Defs/ThingDef[@Name = "Anon2LampBase"]</xpath>
+      </li>
+
+      <li Class="PatchOperationAdd">
+        <xpath>Defs/ThingDef[@Name = "Anon2LampBase"]/comps</xpath>
+        <value>
+          <li Class="Merthsoft.AutoOnAutoOff.CompProperties.ProximityPower">
+            <checkRate>250</checkRate>
+            <autoOn>true</autoOn>
+            <autoOff>true</autoOff>
+            <showOverrideButton>true</showOverrideButton>
+          </li>
+        </value>
+      </li>
+
+      <li Class="PatchOperationAdd">
+        <xpath>Defs/ThingDef[@Name = "Anon2LampBase"]</xpath>
+        <value>
+          <tickerType>Rare</tickerType>
+        </value>
+      </li>
+
+      <li Class="PatchOperationTest">
+        <xpath>Defs/ThingDef[defName = "Anon2EndTableLight"]</xpath>
+      </li>
+
+      <li Class="PatchOperationAdd">
+        <xpath>Defs/ThingDef[defName = "Anon2EndTableLight"]/comps</xpath>
+        <value>
+          <li Class="Merthsoft.AutoOnAutoOff.CompProperties.ProximityPower">
+            <checkRate>250</checkRate>
+            <autoOn>true</autoOn>
+            <autoOff>true</autoOff>
+            <showOverrideButton>true</showOverrideButton>
+          </li>
+        </value>
+      </li>
+
+      <li Class="PatchOperationAdd">
+        <xpath>Defs/ThingDef[defName = "Anon2EndTableLight"]</xpath>
+        <value>
+          <tickerType>Rare</tickerType>
+        </value>
+      </li>
+
+      <li Class="PatchOperationTest">
+        <xpath>Defs/ThingDef[defName = "Anon2RoyalEndTableLight"]</xpath>
+      </li>
+
+      <li Class="PatchOperationAdd">
+        <xpath>Defs/ThingDef[defName = "Anon2RoyalEndTableLight"]/comps</xpath>
+        <value>
+          <li Class="Merthsoft.AutoOnAutoOff.CompProperties.ProximityPower">
+            <checkRate>250</checkRate>
+            <autoOn>true</autoOn>
+            <autoOff>true</autoOff>
+            <showOverrideButton>true</showOverrideButton>
+          </li>
+        </value>
+      </li>
+
+      <li Class="PatchOperationAdd">
+        <xpath>Defs/ThingDef[defName = "Anon2RoyalEndTableLight"]</xpath>
+        <value>
+          <tickerType>Rare</tickerType>
+        </value>
+      </li>
+    </operations>
+  </Operation>
+</Patch>
