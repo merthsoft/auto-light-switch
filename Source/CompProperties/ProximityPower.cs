@@ -1,23 +1,22 @@
 ﻿
-namespace Merthsoft.AutoOnAutoOff.CompProperties
+namespace Merthsoft.AutoOnAutoOff.CompProperties;
+
+internal class ProximityPower : Verse.CompProperties
 {
-    internal class ProximityPower : Verse.CompProperties
+    public ProximityPower()
     {
-        public ProximityPower()
-        {
-            compClass = typeof(Comp.ProximityPower);
+        compClass = typeof(Comp.ProximityPower);
 
-            checkRate = 250;
-            autoOn = true;
-            autoOff = true;
-            showOverrideButton = true;
-            offWhenSleeping = true;
-        }
-
-        public int checkRate;
-        public bool autoOn;
-        public bool autoOff;
-        public bool showOverrideButton;
-        public bool offWhenSleeping;
+        checkRate = 250;
+        autoOn = true;
+        autoOff = true;
+        showOverrideButton = true;
+        offWhenSleeping = true;
     }
+
+    public int checkRate;
+    public bool autoOn;
+    public bool autoOff;
+    public bool showOverrideButton;
+    public bool offWhenSleeping;
 }

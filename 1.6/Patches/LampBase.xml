@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Patch>
+  <Operation Class="PatchOperationAdd">
+    <xpath>Defs/ThingDef[@ParentName = "LampBase" and defName != "SunLamp"]/comps</xpath>
+    <value>
+      <li Class="Merthsoft.AutoOnAutoOff.CompProperties.ProximityPower">
+        <checkRate>250</checkRate>
+        <autoOn>true</autoOn>
+        <autoOff>true</autoOff>
+        <showOverrideButton>true</showOverrideButton>
+      </li>
+    </value>
+  </Operation>
+
+  <Operation Class="PatchOperationAdd">
+    <xpath>Defs/ThingDef[@ParentName = "LampBase" and defName != "SunLamp"]</xpath>
+    <value>
+      <tickerType>Rare</tickerType>
+    </value>
+  </Operation>
+</Patch>
