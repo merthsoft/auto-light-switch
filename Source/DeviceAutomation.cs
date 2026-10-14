@@ -84,6 +84,23 @@ internal sealed class DeviceAutomation : ThingComp
     internal bool MatchesJob(JobDef job) => Kind == DeviceKind.BillTable ? job == JobDefOf.DoBill
         : Kind == DeviceKind.ResearchBench && job == JobDefOf.Research;
 
+    internal bool CanStartWork()
+    {
+        if (!Enabled || Kind == DeviceKind.MedicalMonitor)
+            return true;
+        var power = parent.TryGetComp<CompPowerTrader>();
+        // Keep vanilla's explicitly supported unpowered-tailoring path intact.
+        if (power == null || !power.PowerOn)
+            return true;
+        var net = power.PowerNet;
+        if (net == null)
+            return false;
+        var normal = DevicePowerDrawPatch.OriginalPowerOutput(power);
+        var extra = Math.Max(0f, power.PowerOutput - normal) * CompPower.WattsToWattDaysPerTick;
+        // Match vanilla's real per-tick production + battery budget, substituting
+        // full demand for standby. No fake PowerOn state or stored-energy grant.
+        return net.CurrentStoredEnergy() + net.CurrentEnergyGainRate() + 0.0000001f >= extra;
+    }
     internal bool IsInUse()
     {
         if (Kind == DeviceKind.MedicalMonitor)
@@ -134,6 +151,10 @@ internal sealed class DeviceAutomation : ThingComp
 [HarmonyPatch(typeof(CompPowerTrader), nameof(CompPowerTrader.PowerOutput), MethodType.Getter)]
 internal static class DevicePowerDrawPatch
 {
+    private static readonly AccessTools.FieldRef<CompPowerTrader, float> originalOutput =
+        AccessTools.FieldRefAccess<CompPowerTrader, float>("powerOutputInt");
+    internal static float OriginalPowerOutput(CompPowerTrader power) => originalOutput(power);
+
     private static void Postfix(CompPowerTrader __instance, ref float __result)
     {
         if (__result < -1f && (AutoLight.Settings.AutomateWorkbenches || AutoLight.Settings.AutomateMedicalMonitors))
@@ -148,6 +169,15 @@ internal static class DevicePowerDrawPatch
 [HarmonyPatch(typeof(WorkGiver_DoBill), nameof(WorkGiver_DoBill.JobOnThing))]
 internal static class BillWorkIntentPatch
 {
+    private static bool Prefix(Thing __1, ref Job __result)
+    {
+        var automation = (__1 as ThingWithComps)?.TryGetComp<DeviceAutomation>();
+        if (automation == null || automation.CanStartWork())
+            return true;
+        __result = null;
+        return false;
+    }
+
     private static void Postfix(Job __result)
         => (__result?.targetA.Thing as ThingWithComps)?.TryGetComp<DeviceAutomation>()?.NotifyWorkIntent(__result);
 }
@@ -155,6 +185,44 @@ internal static class BillWorkIntentPatch
 [HarmonyPatch(typeof(WorkGiver_Researcher), nameof(WorkGiver_Researcher.JobOnThing))]
 internal static class ResearchWorkIntentPatch
 {
+    private static bool Prefix(Thing __1, ref Job __result)
+    {
+        var automation = (__1 as ThingWithComps)?.TryGetComp<DeviceAutomation>();
+        if (automation == null || automation.CanStartWork())
+            return true;
+        __result = null;
+        return false;
+    }
+
     private static void Postfix(Job __result)
         => (__result?.targetA.Thing as ThingWithComps)?.TryGetComp<DeviceAutomation>()?.NotifyWorkIntent(__result);
+}
+
+// These vanilla gates are also used while work runs, so an underpowered bench
+// cannot repeatedly get free work during the power net's shutdown interval.
+[HarmonyPatch(typeof(Building_WorkTable), nameof(Building_WorkTable.UsableForBillsAfterFueling))]
+internal static class BillFullPowerBudgetPatch
+{
+    private static void Postfix(Building_WorkTable __instance, ref bool __result)
+    {
+        if (__result && __instance.TryGetComp<DeviceAutomation>() is DeviceAutomation automation)
+            __result = automation.CanStartWork();
+    }
+}
+
+[HarmonyPatch(typeof(ResearchProjectDef), nameof(ResearchProjectDef.CanBeResearchedAt))]
+internal static class ResearchFullPowerBudgetPatch
+{
+    private static void Postfix(Building_ResearchBench __0, bool __1, ref bool __result)
+    {
+        if (__result && !__1 && __0.TryGetComp<DeviceAutomation>() is DeviceAutomation automation)
+            __result = automation.CanStartWork();
+    }
+}
+
+[HarmonyPatch(typeof(JobDriver), nameof(JobDriver.Notify_Starting))]
+internal static class StartingWorkIntentPatch
+{
+    private static void Prefix(JobDriver __instance)
+        => (__instance.job?.targetA.Thing as ThingWithComps)?.TryGetComp<DeviceAutomation>()?.NotifyWorkIntent(__instance.job);
 }
