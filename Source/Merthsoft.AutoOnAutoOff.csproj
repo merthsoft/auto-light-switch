@@ -30,6 +30,7 @@
     <Compile Include="VacancyTimer.cs" />
     <Compile Include="OccupancyMapComponent.cs" />
     <Compile Include="AutomaticSwitchSounds.cs" />
+    <Compile Include="DeviceAutomation.cs" />
     <Compile Include="AutoLightSettings.cs" />
     <Compile Include="Compatability.cs" />
     <Compile Include="CompProperties\ProximityPower.cs" />

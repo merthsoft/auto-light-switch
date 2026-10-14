@@ -19,9 +19,10 @@ public class AutoLight : Mod
 
     public override void DoSettingsWindowContents(Rect inRect)
     {
+        var deviceSettingsBefore = (Settings.AutomateWorkbenches, Settings.AutomateMedicalMonitors);
         var before = (Settings.OverrideCompProp, Settings.OverrideOnTicks, Settings.OverrideOffTicks,
             Settings.FastEntryDetection, Settings.VacancyDelayTicks, Settings.IgnoreAnimals, Settings.MuteAutomaticSwitching);
-        var view = new Rect(0, 0, inRect.width - 20, 800);
+        var view = new Rect(0, 0, inRect.width - 20, 1100);
         Widgets.BeginScrollView(inRect, ref scrollPosition, view);
         var ls = new Listing_Standard();
         ls.Begin(view);
@@ -41,13 +42,20 @@ public class AutoLight : Mod
             ls.TextFieldNumericLabeled("Check rate when light is off.", ref Settings.OverrideOffTicks, ref offBuffer, 0, 2500);
             ls.TextFieldNumericLabeled("Check rate when light is on.", ref Settings.OverrideOnTicks, ref onBuffer, 0, 2500);
         }
+        ls.Gap();
+        ls.CheckboxLabeled("Use idle power saving for supported vanilla workbenches.", ref Settings.AutomateWorkbenches);
+        ls.Label("Eight electric bill tables and the hi-tech research bench use 1 W standby until a pawn selects or performs work. Existing power switches and job requirements still apply.");
+        ls.CheckboxLabeled("Use idle power saving for vanilla vitals monitors.", ref Settings.AutomateMedicalMonitors);
+        ls.Label("Monitors use normal power while any linked bed is occupied, including by a sleeping patient, and 1 W standby otherwise. Each supported device has its own opt-out toggle. Other appliances are unchanged.");
         ls.End();
         Widgets.EndScrollView();
         var after = (Settings.OverrideCompProp, Settings.OverrideOnTicks, Settings.OverrideOffTicks,
             Settings.FastEntryDetection, Settings.VacancyDelayTicks, Settings.IgnoreAnimals, Settings.MuteAutomaticSwitching);
-        if (before == after)
+        if (before == after && deviceSettingsBefore == (Settings.AutomateWorkbenches, Settings.AutomateMedicalMonitors))
             return;
         Settings.Write();
+        if (before == after)
+            return;
         foreach (var map in Find.Maps)
             foreach (var thing in map.spawnedThings)
                 thing.TryGetComp<Comp.ProximityPower>()?.ResetTimer(false);

@@ -11,6 +11,8 @@ public sealed class OccupancyMapComponent : MapComponent
     private readonly HashSet<Comp.ProximityPower> lights = new();
     private readonly Dictionary<Room, int> occupants = new();
     private readonly Dictionary<Room, int> doorwayOccupants = new();
+    private readonly HashSet<Thing> billTargets = new();
+    private readonly HashSet<Thing> researchTargets = new();
     private int snapshotTick = -1;
 
     public OccupancyMapComponent(Map map) : base(map) { }
@@ -37,6 +39,12 @@ public sealed class OccupancyMapComponent : MapComponent
         return ((inside | (AutoLight.Settings.FastEntryDetection ? doorway : 0)) & mask) != 0;
     }
 
+    internal bool IsWorkTarget(Thing target, bool research)
+    {
+        Refresh();
+        return (research ? researchTargets : billTargets).Contains(target);
+    }
+
     private void Refresh()
     {
         var now = Find.TickManager.TicksGame;
@@ -45,8 +53,16 @@ public sealed class OccupancyMapComponent : MapComponent
         snapshotTick = now;
         occupants.Clear();
         doorwayOccupants.Clear();
+        billTargets.Clear();
+        researchTargets.Clear();
         foreach (var pawn in map.mapPawns.AllPawnsSpawned)
         {
+            var job = pawn.CurJob;
+            if (job?.targetA.Thing is Thing target)
+            {
+                if (job.def == JobDefOf.DoBill) billTargets.Add(target);
+                else if (job.def == JobDefOf.Research) researchTargets.Add(target);
+            }
             var bit = (pawn.RaceProps.Animal ? 4 : 1) * (pawn.Awake() ? 1 : 2);
             Add(occupants, pawn.GetRoom(), bit);
             // Occupancy, not door events: held-open doors work and unrelated doors do nothing.
