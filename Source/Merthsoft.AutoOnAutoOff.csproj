@@ -18,6 +18,7 @@
     <HarmonyPath Condition="'$(HarmonyPath)' == ''">$(MSBuildProgramFiles32)\Steam\steamapps\workshop\content\294100\2009463077\1.7\Assemblies\0Harmony.dll</HarmonyPath>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="0Harmony"><HintPath>$(HarmonyPath)</HintPath><Private>false</Private></Reference>
     <Reference Include="Assembly-CSharp"><HintPath>$(RimWorldDir)\Assembly-CSharp.dll</HintPath><Private>false</Private></Reference>
     <Reference Include="UnityStubs"><HintPath>$(RimWorldDir)\UnityStubs.dll</HintPath><Private>false</Private></Reference>
     <Reference Include="Waylith"><HintPath>$(RimWorldDir)\Waylith.dll</HintPath><Private>false</Private></Reference>
@@ -26,6 +27,9 @@
   <PropertyGroup><EnableDefaultCompileItems>false</EnableDefaultCompileItems></PropertyGroup>
   <ItemGroup>
     <Compile Include="AutoLight.cs" />
+    <Compile Include="VacancyTimer.cs" />
+    <Compile Include="OccupancyMapComponent.cs" />
+    <Compile Include="AutomaticSwitchSounds.cs" />
     <Compile Include="AutoLightSettings.cs" />
     <Compile Include="Compatability.cs" />
     <Compile Include="CompProperties\ProximityPower.cs" />

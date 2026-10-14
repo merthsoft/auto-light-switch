@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+using System.Collections.Generic;
 using RimWorld;
 using UnityEngine;
 using Verse;
@@ -9,94 +8,101 @@ namespace Merthsoft.AutoOnAutoOff.Comp;
 internal class ProximityPower : ThingComp
 {
     public CompProperties.ProximityPower Properties => (CompProperties.ProximityPower)props;
-
-    protected int ticksUntilNextCheck = 0;
-
-    public bool OverrideAutoPower = false;
-
+    public bool OverrideAutoPower;
+    private readonly VacancyTimer vacancy = new();
+    private Room lastRoom;
+    private int nextCheck;
     private Thing trueParent;
-
-    public Thing TrueParent
-        => trueParent ??= parent.GetFieldValue<Thing>("glower")
-            ?? parent.GetType().BaseType.GetFieldValue<Thing>("glower", parent)
-            ?? parent;
-
     private Texture2D cachedCommandTex;
+    public Thing TrueParent => trueParent ??= parent.GetFieldValue<Thing>("glower")
+        ?? parent.GetType().BaseType.GetFieldValue<Thing>("glower", parent) ?? parent;
+    private Texture2D CommandTex => cachedCommandTex ??= ContentFinder<Texture2D>.Get("UI/Commands/OverrideButton", true);
 
-    private Texture2D CommandTex 
-        => cachedCommandTex ??= ContentFinder<Texture2D>.Get("UI/Commands/OverrideButton", true);
+    public override void PostSpawnSetup(bool respawningAfterLoad)
+    {
+        base.PostSpawnSetup(respawningAfterLoad);
+        trueParent = null;
+        parent.Map.GetComponent<OccupancyMapComponent>().Register(this);
+    }
+
+    public override void PostDeSpawn(Map map, DestroyMode mode = DestroyMode.Vanish)
+    {
+        map.GetComponent<OccupancyMapComponent>().Unregister(this);
+        base.PostDeSpawn(map, mode);
+        lastRoom = null;
+        vacancy.Since = -1;
+    }
 
     public override void PostExposeData()
     {
         base.PostExposeData();
-
-        Scribe_Values.Look<bool>(ref OverrideAutoPower, nameof(OverrideAutoPower));
+        Scribe_Values.Look(ref OverrideAutoPower, nameof(OverrideAutoPower));
+        Scribe_Values.Look(ref vacancy.Since, "vacancySince", -1);
     }
 
-    public override void CompTick() 
-        => HandleTicks(1);
+    public override void CompTick() { if (!AutoLight.Settings.NeedsFrequentChecks) CheckOccupancy(); }
+    public override void CompTickRare() { if (!AutoLight.Settings.NeedsFrequentChecks) CheckOccupancy(); }
 
-    public override void CompTickRare() 
-        => HandleTicks(GenTicks.TickRareInterval);
-
-    public void ResetTimer(bool lightOn) 
-        => ticksUntilNextCheck = !AutoLight.Settings.OverrideCompProp 
-            ? Properties.checkRate 
-            : lightOn ? AutoLight.Settings.OverrideOnTicks : AutoLight.Settings.OverrideOffTicks;
-
-    public Room GetRoom()
-        => TrueParent.GetRoom() ?? Compatability.MURWallLight.GetRoom(parent);
-
-    private void HandleTicks(int ticks)
+    public void ResetTimer(bool lightOn)
     {
-        if (OverrideAutoPower)
+        nextCheck = 0;
+        vacancy.Since = -1;
+    }
+
+    public Room GetRoom() => TrueParent.GetRoom() ?? Compatability.MURWallLight.GetRoom(parent);
+
+    internal void CheckOccupancy()
+    {
+        if (!parent.Spawned || OverrideAutoPower)
             return;
-
-        ticksUntilNextCheck -= ticks;
-        if (ticksUntilNextCheck <= 0)
+        var now = Find.TickManager.TicksGame;
+        if (now < nextCheck)
+            return;
+        var flick = parent.TryGetComp<CompFlickable>();
+        if (flick == null)
+            return;
+        var settings = AutoLight.Settings;
+        ScheduleNext(now, flick.SwitchIsOn);
+        var room = GetRoom();
+        if (lastRoom != null && room != lastRoom)
         {
-            var room = GetRoom();
-            if (room == null || room.PsychologicallyOutdoors)
-                return;
-
-            var occupied = false;
-            foreach (var thing in room.ContainedAndAdjacentThings)
-            {
-                if (thing is not Pawn pawn)
-                    continue;
-                
-                if (pawn.GetRoom()?.ID != room.ID)
-                    continue;
-                
-                if (!Properties.offWhenSleeping || pawn.Awake())
-                {
-                    occupied = true;
-                    break;
-                }
-            }
-
-            var lightOn = false;
-            if (occupied && Properties.autoOn)
-                lightOn = true;
-            else if (!occupied && Properties.autoOff)
-                lightOn = false;
-
-            setSwitchIsOn(lightOn);
-            ResetTimer(lightOn);
+            vacancy.Since = -1;
         }
-
-        void setSwitchIsOn(bool switchIsOn)
+        lastRoom = room;
+        if (room == null || room.PsychologicallyOutdoors)
         {
-            var flickComp = parent.TryGetComp<CompFlickable>();
-            flickComp?.SwitchIsOn = switchIsOn;
+            vacancy.Since = -1;
+            return;
         }
+        var occupied = parent.Map.GetComponent<OccupancyMapComponent>().IsOccupied(room, Properties.offWhenSleeping);
+        var mayTurnOff = vacancy.MayTurnOff(occupied, now, settings.VacancyDelayTicks);
+        if (occupied && Properties.autoOn)
+            SetAutomatic(flick, true);
+        else if (!occupied && Properties.autoOff && mayTurnOff)
+            SetAutomatic(flick, false);
+        ScheduleNext(now, flick.SwitchIsOn);
+    }
+
+    private void ScheduleNext(int now, bool lightOn)
+    {
+        var settings = AutoLight.Settings;
+        var rate = settings.OverrideCompProp
+            ? (lightOn ? settings.OverrideOnTicks : settings.OverrideOffTicks)
+            : Properties.checkRate;
+        nextCheck = now + (settings.NeedsFrequentChecks ? OccupancyMapComponent.CheckInterval : System.Math.Max(1, rate));
+    }
+    private void SetAutomatic(CompFlickable flick, bool on)
+    {
+        if (flick.SwitchIsOn == on)
+            return;
+        AutomaticSwitchSounds.Mark(parent.TryGetComp<CompPowerTrader>(), on);
+        flick.SwitchIsOn = on;
     }
 
     public override IEnumerable<Gizmo> CompGetGizmosExtra()
     {
-        foreach (var c in base.CompGetGizmosExtra())
-            yield return c;
-
+        foreach (var gizmo in base.CompGetGizmosExtra())
+            yield return gizmo;
         if (Properties.showOverrideButton && parent.Faction == Faction.OfPlayer)
             yield return new Command_Toggle
             {
@@ -107,6 +113,8 @@ internal class ProximityPower : ThingComp
                 toggleAction = delegate
                 {
                     OverrideAutoPower = !OverrideAutoPower;
+                    AutomaticSwitchSounds.Cancel(parent.TryGetComp<CompPowerTrader>());
+                    ResetTimer(false);
                     if (OverrideAutoPower)
                         parent.TryGetComp<CompFlickable>()?.ResetToOn();
                 }
