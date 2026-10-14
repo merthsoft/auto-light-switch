@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Patch>
+  <Operation Class="PatchOperationSequence">
+    <success>Always</success>
+    <operations>
+      <li Class="PatchOperationTest">
+        <xpath>Defs/ThingDef[@Name = "FloorLightSquare"]</xpath>
+      </li>
+
+      <li Class="PatchOperationAdd">
+        <xpath>Defs/ThingDef[@Name = "FloorLightSquare"]/comps</xpath>
+        <value>
+          <li Class="Merthsoft.AutoOnAutoOff.CompProperties.ProximityPower">
+            <checkRate>250</checkRate>
+            <autoOn>true</autoOn>
+            <autoOff>true</autoOff>
+            <showOverrideButton>true</showOverrideButton>
+          </li>
+        </value>
+      </li>
+      <li Class="PatchOperationAdd">
+        <xpath>Defs/ThingDef[@Name = "FloorLightSquare"]</xpath>
+        <value>
+          <tickerType>Rare</tickerType>
+        </value>
+      </li>
+
+      <li Class="PatchOperationAdd">
+        <xpath>Defs/ThingDef[@Name = "FloorLightStripe"]/comps</xpath>
+        <value>
+          <li Class="Merthsoft.AutoOnAutoOff.CompProperties.ProximityPower">
+            <checkRate>250</checkRate>
+            <autoOn>true</autoOn>
+            <autoOff>true</autoOff>
+            <showOverrideButton>true</showOverrideButton>
+          </li>
+        </value>
+      </li>
+      <li Class="PatchOperationAdd">
+        <xpath>Defs/ThingDef[@Name = "FloorLightStripe"]</xpath>
+        <value>
+          <tickerType>Rare</tickerType>
+        </value>
+      </li>
+
+      <li Class="PatchOperationAdd">
+        <xpath>Defs/ThingDef[@Name = "FloorLightSmallStripe"]/comps</xpath>
+        <value>
+          <li Class="Merthsoft.AutoOnAutoOff.CompProperties.ProximityPower">
+            <checkRate>250</checkRate>
+            <autoOn>true</autoOn>
+            <autoOff>true</autoOff>
+            <showOverrideButton>true</showOverrideButton>
+          </li>
+        </value>
+      </li>
+      <li Class="PatchOperationAdd">
+        <xpath>Defs/ThingDef[@Name = "FloorLightSmallStripe"]</xpath>
+        <value>
+          <tickerType>Rare</tickerType>
+        </value>
+      </li>
+
+      <li Class="PatchOperationAdd">
+        <xpath>Defs/ThingDef[@Name = "FloorLightPlus"]/comps</xpath>
+        <value>
+          <li Class="Merthsoft.AutoOnAutoOff.CompProperties.ProximityPower">
+            <checkRate>250</checkRate>
+            <autoOn>true</autoOn>
+            <autoOff>true</autoOff>
+            <showOverrideButton>true</showOverrideButton>
+          </li>
+        </value>
+      </li>
+      <li Class="PatchOperationAdd">
+        <xpath>Defs/ThingDef[@Name = "FloorLightPlus"]</xpath>
+        <value>
+          <tickerType>Rare</tickerType>
+        </value>
+      </li>
+
+      <li Class="PatchOperationAdd">
+        <xpath>Defs/ThingDef[@Name = "FloorLightCorner"]/comps</xpath>
+        <value>
+          <li Class="Merthsoft.AutoOnAutoOff.CompProperties.ProximityPower">
+            <checkRate>250</checkRate>
+            <autoOn>true</autoOn>
+            <autoOff>true</autoOff>
+            <showOverrideButton>true</showOverrideButton>
+          </li>
+        </value>
+      </li>
+      <li Class="PatchOperationAdd">
+        <xpath>Defs/ThingDef[@Name = "FloorLightCorner"]</xpath>
+        <value>
+          <tickerType>Rare</tickerType>
+        </value>
+      </li>
+
+      <li Class="PatchOperationAdd">
+        <xpath>Defs/ThingDef[@Name = "FloorLightInverseCorner"]/comps</xpath>
+        <value>
+          <li Class="Merthsoft.AutoOnAutoOff.CompProperties.ProximityPower">
+            <checkRate>250</checkRate>
+            <autoOn>true</autoOn>
+            <autoOff>true</autoOff>
+            <showOverrideButton>true</showOverrideButton>
+          </li>
+        </value>
+      </li>
+      <li Class="PatchOperationAdd">
+        <xpath>Defs/ThingDef[@Name = "FloorLightInverseCorner"]</xpath>
+        <value>
+          <tickerType>Rare</tickerType>
+        </value>
+      </li>
+
+      <li Class="PatchOperationAdd">
+        <xpath>Defs/ThingDef[@Name = "FloorLightCornerSmall"]/comps</xpath>
+        <value>
+          <li Class="Merthsoft.AutoOnAutoOff.CompProperties.ProximityPower">
+            <checkRate>250</checkRate>
+            <autoOn>true</autoOn>
+            <autoOff>true</autoOff>
+            <showOverrideButton>true</showOverrideButton>
+          </li>
+        </value>
+      </li>
+      <li Class="PatchOperationAdd">
+        <xpath>Defs/ThingDef[@Name = "FloorLightCornerSmall"]</xpath>
+        <value>
+          <tickerType>Rare</tickerType>
+        </value>
+      </li>
+
+      <li Class="PatchOperationAdd">
+        <xpath>Defs/ThingDef[@Name = "FloorLightInverseCornerSmall"]/comps</xpath>
+        <value>
+          <li Class="Merthsoft.AutoOnAutoOff.CompProperties.ProximityPower">
+            <checkRate>250</checkRate>
+            <autoOn>true</autoOn>
+            <autoOff>true</autoOff>
+            <showOverrideButton>true</showOverrideButton>
+          </li>
+        </value>
+      </li>
+      <li Class="PatchOperationAdd">
+        <xpath>Defs/ThingDef[@Name = "FloorLightInverseCornerSmall"]</xpath>
+        <value>
+          <tickerType>Rare</tickerType>
+        </value>
+      </li>
+
+      <li Class="PatchOperationAdd">
+        <xpath>Defs/ThingDef[@Name = "FloorLightStripeMiddle"]/comps</xpath>
+        <value>
+          <li Class="Merthsoft.AutoOnAutoOff.CompProperties.ProximityPower">
+            <checkRate>250</checkRate>
+            <autoOn>true</autoOn>
+            <autoOff>true</autoOff>
+            <showOverrideButton>true</showOverrideButton>
+          </li>
+        </value>
+      </li>
+      <li Class="PatchOperationAdd">
+        <xpath>Defs/ThingDef[@Name = "FloorLightStripeMiddle"]</xpath>
+        <value>
+          <tickerType>Rare</tickerType>
+        </value>
+      </li>
+
+      <li Class="PatchOperationAdd">
+        <xpath>Defs/ThingDef[@Name = "FloorLightSmallStripeMiddle"]/comps</xpath>
+        <value>
+          <li Class="Merthsoft.AutoOnAutoOff.CompProperties.ProximityPower">
+            <checkRate>250</checkRate>
+            <autoOn>true</autoOn>
+            <autoOff>true</autoOff>
+            <showOverrideButton>true</showOverrideButton>
+          </li>
+        </value>
+      </li>
+      <li Class="PatchOperationAdd">
+        <xpath>Defs/ThingDef[@Name = "FloorLightSmallStripeMiddle"]</xpath>
+        <value>
+          <tickerType>Rare</tickerType>
+        </value>
+      </li>
+
+      <li Class="PatchOperationAdd">
+        <xpath>Defs/ThingDef[@Name = "FloorLightSmallStripeDiagonal"]/comps</xpath>
+        <value>
+          <li Class="Merthsoft.AutoOnAutoOff.CompProperties.ProximityPower">
+            <checkRate>250</checkRate>
+            <autoOn>true</autoOn>
+            <autoOff>true</autoOff>
+            <showOverrideButton>true</showOverrideButton>
+          </li>
+        </value>
+      </li>
+      <li Class="PatchOperationAdd">
+        <xpath>Defs/ThingDef[@Name = "FloorLightSmallStripeDiagonal"]</xpath>
+        <value>
+          <tickerType>Rare</tickerType>
+        </value>
+      </li>
+
+      <li Class="PatchOperationAdd">
+        <xpath>Defs/ThingDef[@Name = "FloorLightTriangleCorner"]/comps</xpath>
+        <value>
+          <li Class="Merthsoft.AutoOnAutoOff.CompProperties.ProximityPower">
+            <checkRate>250</checkRate>
+            <autoOn>true</autoOn>
+            <autoOff>true</autoOff>
+            <showOverrideButton>true</showOverrideButton>
+          </li>
+        </value>
+      </li>
+      <li Class="PatchOperationAdd">
+        <xpath>Defs/ThingDef[@Name = "FloorLightTriangleCorner"]</xpath>
+        <value>
+          <tickerType>Rare</tickerType>
+        </value>
+      </li>
+
+      <li Class="PatchOperationAdd">
+        <xpath>Defs/ThingDef[@Name = "FloorLightTriangle"]/comps</xpath>
+        <value>
+          <li Class="Merthsoft.AutoOnAutoOff.CompProperties.ProximityPower">
+            <checkRate>250</checkRate>
+            <autoOn>true</autoOn>
+            <autoOff>true</autoOff>
+            <showOverrideButton>true</showOverrideButton>
+          </li>
+        </value>
+      </li>
+      <li Class="PatchOperationAdd">
+        <xpath>Defs/ThingDef[@Name = "FloorLightTriangle"]</xpath>
+        <value>
+          <tickerType>Rare</tickerType>
+        </value>
+      </li>
+
+      <li Class="PatchOperationAdd">
+        <xpath>Defs/ThingDef[@Name = "FloorTileLightSquare"]</xpath>
+        <value>
+          <comps>
+            <li Class="Merthsoft.AutoOnAutoOff.CompProperties.ProximityPower">
+              <checkRate>250</checkRate>
+              <autoOn>true</autoOn>
+              <autoOff>true</autoOff>
+              <showOverrideButton>true</showOverrideButton>
+            </li>
+          </comps>
+        </value>
+      </li>
+      <li Class="PatchOperationAdd">
+        <xpath>Defs/ThingDef[@Name = "FloorTileLightSquare"]</xpath>
+        <value>
+          <tickerType>Rare</tickerType>
+        </value>
+      </li>
+
+    </operations>
+  </Operation>
+</Patch>
